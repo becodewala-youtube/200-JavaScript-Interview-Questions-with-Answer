@@ -1259,3 +1259,767 @@ Promise.race([p1, p2])
 ```
 
 
+
+
+## ✅ DOM (Document Object Model) Manipulation
+
+
+
+### 🔹 **66. What is the DOM?**
+
+**DOM (Document Object Model)** is a programming interface for HTML and XML documents. It represents the **structure of a webpage as a tree of objects**, where each element (like `<div>`, `<p>`, etc.) becomes a node.
+
+🧠 **Example structure:**
+
+```html
+<html>
+  <body>
+    <h1>Hello</h1>
+    <button>Click Me</button>
+  </body>
+</html>
+```
+
+🧩 In the DOM, this becomes a **tree**:
+
+```
+Document
+ └── html
+      ├── body
+           ├── h1
+           └── button
+```
+
+* You can **access, change, add, or remove** elements using JavaScript.
+
+
+
+### 🔹 **67. How to select elements in the DOM?**
+
+You can use various methods to **select DOM elements**.
+
+🧠 **Examples:**
+
+```js
+// Select by ID
+const title = document.getElementById("main-title");
+
+// Select by class
+const items = document.getElementsByClassName("item");
+
+// Select by tag name
+const paragraphs = document.getElementsByTagName("p");
+
+// Select using CSS selectors
+const firstItem = document.querySelector(".item");
+const allItems = document.querySelectorAll(".item");
+```
+
+
+
+### 🔹 **68. What are DOM methods?**
+
+DOM methods are functions provided by the browser to interact with the page.
+
+🧠 **Common Methods:**
+
+| Method                     | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `getElementById()`         | Selects one element by ID                          |
+| `getElementsByClassName()` | Selects all elements with a class (HTMLCollection) |
+| `querySelector()`          | Selects **first** element matching a CSS selector  |
+| `querySelectorAll()`       | Selects **all** elements (NodeList)                |
+| `createElement()`          | Creates a new HTML element                         |
+| `appendChild()`            | Adds element as a child                            |
+| `removeChild()`            | Removes a child element                            |
+| `setAttribute()`           | Sets an attribute                                  |
+| `classList.add()`          | Adds a class                                       |
+
+
+
+### 🔹 **69. Difference between getElementById, querySelector, and querySelectorAll**
+
+| Feature       | `getElementById` | `querySelector`        | `querySelectorAll`    |
+| ------------- | ---------------- | ---------------------- | --------------------- |
+| Return type   | Element (single) | First matching element | NodeList (array-like) |
+| Selector type | ID only          | CSS selector           | CSS selector          |
+| Usage         | Simpler, faster  | Flexible               | For multiple elements |
+
+🧠 **Example:**
+
+```html
+<div id="box" class="container box"></div>
+```
+
+```js
+document.getElementById("box");           // ✅ ID only
+document.querySelector(".box");           // ✅ First element with class 'box'
+document.querySelectorAll(".box");        // ✅ All elements with class 'box'
+```
+
+
+
+### 🔹 **70. What is event bubbling and capturing?**
+
+These define the **order of event propagation** in the DOM.
+
+🧩 **Event Bubbling** (Default):
+
+* The event starts at the **target element** and bubbles **up** to the root.
+
+🧩 **Event Capturing**:
+
+* The event is captured from the **root** down to the **target**.
+
+🧠 **Example:**
+
+```html
+<div id="outer">
+  <button id="inner">Click Me</button>
+</div>
+```
+
+```js
+document.getElementById("outer").addEventListener("click", () => {
+  console.log("Outer clicked");
+});
+
+document.getElementById("inner").addEventListener("click", () => {
+  console.log("Inner clicked");
+});
+```
+
+👉 Output:
+
+```
+Inner clicked
+Outer clicked
+```
+
+(⬆️ bubbling happens by default)
+
+
+
+### 🔹 **71. What is `addEventListener()`?**
+
+It attaches an **event handler** to an element without overwriting existing ones.
+
+🧠 **Syntax:**
+
+```js
+element.addEventListener("event", callback, useCapture);
+```
+
+🧠 **Example:**
+
+```js
+const btn = document.querySelector("button");
+btn.addEventListener("click", () => {
+  alert("Button clicked!");
+});
+```
+
+> ✅ Can attach multiple listeners of the same type.
+
+
+### 🔹 **72. What is event delegation?**
+
+Event delegation is a technique where you **attach a single event listener to a parent element** to handle events for multiple children.
+
+✅ Efficient for **dynamic elements**.
+
+🧠 **Example:**
+
+```html
+<ul id="list">
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>
+```
+
+```js
+document.getElementById("list").addEventListener("click", function(e) {
+  if (e.target.tagName === "LI") {
+    console.log("You clicked: " + e.target.textContent);
+  }
+});
+```
+
+
+### 🔹 **73. What are DOM events?**
+
+DOM events are **signals** that something has happened in the document.
+
+🧠 **Common DOM events:**
+
+| Event Type   | Trigger                           |
+| ------------ | --------------------------------- |
+| `click`      | User clicks on an element         |
+| `submit`     | Form is submitted                 |
+| `change`     | Form element value is changed     |
+| `keydown`    | Key is pressed down               |
+| `keyup`      | Key is released                   |
+| `mouseenter` | Cursor enters element             |
+| `mouseleave` | Cursor leaves element             |
+| `load`       | Page or resource finishes loading |
+| `scroll`     | User scrolls the document         |
+
+
+
+### 🔹 **74. How to prevent default behavior?**
+
+Use `event.preventDefault()` to prevent the browser’s default action.
+
+🧠 **Example:**
+
+```html
+<a href="https://google.com" id="link">Go</a>
+```
+
+```js
+document.getElementById("link").addEventListener("click", function(e) {
+  e.preventDefault(); // stops navigation
+  alert("Link clicked but not navigated!");
+});
+```
+
+
+
+### 🔹 **75. How to stop event propagation?**
+
+Use `event.stopPropagation()` to **stop bubbling** or **capturing**.
+
+🧠 **Example:**
+
+```js
+document.getElementById("outer").addEventListener("click", () => {
+  console.log("Outer clicked");
+});
+
+document.getElementById("inner").addEventListener("click", (e) => {
+  e.stopPropagation(); // prevent bubbling
+  console.log("Inner clicked");
+});
+```
+
+👉 Output:
+
+```
+Inner clicked
+```
+
+
+
+## ✅ ERROR HANDLING & DEBUGGING
+
+
+### 🔹 76. **What is error handling in JavaScript?**
+
+**Error handling** is the process of catching and responding to **runtime errors** so that your application doesn’t crash and can handle exceptions gracefully.
+
+🧠 **Goal:** Improve robustness and user experience.
+
+### 🔹 77. **What is try...catch...finally?**
+
+Used to catch and handle exceptions.
+
+🧠 **Syntax:**
+
+```js
+try {
+  // Code that may throw an error
+} catch (error) {
+  // Handle the error
+} finally {
+  // Always executes, even if there's an error
+}
+```
+
+🧠 **Example:**
+
+```js
+try {
+  let x = y + 1; // y is not defined
+} catch (err) {
+  console.log("Caught an error:", err.message);
+} finally {
+  console.log("This runs no matter what");
+}
+```
+
+> ✅ `finally` is often used to **clean up resources**, like closing files or ending DB connections.
+
+
+
+### 🔹 78. **What is `throw`?**
+
+You can use `throw` to **manually create custom errors**.
+
+🧠 **Example:**
+
+```js
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error("Cannot divide by zero");
+  }
+  return a / b;
+}
+
+try {
+  divide(5, 0);
+} catch (e) {
+  console.log(e.message);
+}
+```
+
+
+
+### 🔹 79. **Difference between `TypeError`, `ReferenceError`, and `SyntaxError`**
+
+| Error Type       | When it occurs                          | Example                                |
+| ---------------- | --------------------------------------- | -------------------------------------- |
+| `TypeError`      | Using a value in an invalid way         | `"abc".toFixed(2)`                     |
+| `ReferenceError` | Refers to a variable that doesn't exist | `console.log(x)` when `x` is undefined |
+| `SyntaxError`    | Invalid code syntax                     | `if (a === ) {`                        |
+
+
+
+### 🔹 80. **How do you debug JavaScript code?**
+
+🧰 Common Debugging Techniques:
+
+* **`console.log()`**
+* **Browser DevTools** (Elements, Console, Network, Sources tab)
+* **Breakpoints**
+* **Debugger keyword**
+* **Linting tools** (ESLint)
+* **Using `try...catch`**
+
+🧠 **Tip:** Add logs at multiple points to understand data flow.
+
+
+
+### 🔹 81. **What are breakpoints in browser DevTools?**
+
+A **breakpoint** is a marker you set in the **DevTools “Sources” tab** to **pause code execution** at a specific line.
+
+🧠 **How to use:**
+
+1. Open Chrome DevTools → “Sources” tab.
+2. Click the line number in your JS file to add a breakpoint.
+3. Interact with the page.
+4. Execution will pause at the breakpoint, allowing inspection.
+
+🎯 Helpful for:
+
+* Inspecting variable values.
+* Stepping through code line-by-line.
+* Watching call stack changes.
+
+
+
+## ✅ JAVASCRIPT IN THE BROWSER
+
+
+
+### 🔹 82. **What is the `window` object?**
+
+The **`window`** object is the **global object** in the browser.
+
+🧠 It represents the **browser window/tab** and provides methods and properties like:
+
+```js
+console.log(window.innerHeight);   // Height of the window
+window.alert("Hi!");              // Alert popup
+```
+
+> All global variables/functions are properties of `window`:
+
+```js
+var a = 10;
+console.log(window.a); // 10
+```
+
+
+
+### 🔹 83. **What is the `document` object?**
+
+The `document` object represents the **webpage loaded** in the browser (DOM). It’s part of the `window` object:
+
+```js
+console.log(window.document === document); // true
+```
+
+🧠 **Common usages:**
+
+```js
+document.getElementById("id");
+document.querySelector(".class");
+document.title = "New Page Title";
+```
+
+
+
+### 🔹 84. **What are cookies?**
+
+Cookies are **small key-value pairs** stored in the browser to **maintain session state**.
+
+🧠 **Use Cases:**
+
+* Login sessions
+* Tracking user activity
+* Storing preferences
+
+🧠 **Example:**
+
+```js
+document.cookie = "username=John; expires=Fri, 31 Dec 2025 23:59:59 GMT";
+console.log(document.cookie); // "username=John"
+```
+
+> ❗ Cookies are **automatically sent to the server** with HTTP requests.
+
+
+
+### 🔹 85. **What is localStorage vs sessionStorage?**
+
+| Feature    | `localStorage`                     | `sessionStorage`         |
+| ---------- | ---------------------------------- | ------------------------ |
+| Lifetime   | Until manually cleared             | Until tab is closed      |
+| Scope      | Shared across tabs                 | Only for the current tab |
+| Size Limit | \~5MB                              | \~5MB                    |
+| API        | `setItem`, `getItem`, `removeItem` | Same                     |
+
+🧠 **Example:**
+
+```js
+// localStorage
+localStorage.setItem("theme", "dark");
+console.log(localStorage.getItem("theme")); // "dark"
+
+// sessionStorage
+sessionStorage.setItem("user", "John");
+```
+
+
+
+### 🔹 86. **How do you manipulate the DOM with JavaScript?**
+
+✅ You can **create**, **select**, **update**, or **delete** elements dynamically.
+
+🧠 **Example:**
+
+```js
+const heading = document.createElement("h1");
+heading.textContent = "Welcome!";
+document.body.appendChild(heading);
+
+// Change existing
+document.querySelector("p").style.color = "blue";
+```
+
+
+
+### 🔹 87. **What are `alert`, `confirm`, and `prompt`?**
+
+These are **modal dialogs** provided by the `window` object.
+
+| Method      | Description                                 |
+| ----------- | ------------------------------------------- |
+| `alert()`   | Displays a simple popup with a message      |
+| `confirm()` | Shows Yes/No popup and returns true/false   |
+| `prompt()`  | Takes user input and returns it as a string |
+
+🧠 **Example:**
+
+```js
+alert("Hello!");
+
+const agree = confirm("Do you agree?");
+if (agree) console.log("User agreed");
+
+const name = prompt("What is your name?");
+console.log("Hi", name);
+```
+
+> ❗ These methods are **blocking** and **pause JavaScript execution** until user action.
+
+
+
+
+# ✅ Advanced JavaScript Concepts
+
+
+
+### 🔹 88. **What is strict mode?**
+
+**`"use strict"`** is a **pragma** that tells JavaScript to run in a **strict variant** of JavaScript.
+
+🧠 **Benefits:**
+
+* Prevents use of undeclared variables.
+* Throws errors for silent bugs.
+* Prevents use of reserved words.
+
+🧠 **Example:**
+
+```js
+"use strict";
+
+x = 5; // ❌ ReferenceError: x is not defined
+```
+
+✅ Use it at the **top of a script or function**:
+
+```js
+function demo() {
+  "use strict";
+  // strict mode active here
+}
+```
+
+
+
+### 🔹 89. **What is the prototype chain?**
+
+JavaScript uses **prototype-based inheritance**. Every object has an internal property `[[Prototype]]` (accessible via `__proto__`) pointing to another object.
+
+🔗 This forms a **chain** — the **Prototype Chain** — ending with `null`.
+
+🧠 **Example:**
+
+```js
+let arr = [1, 2, 3];
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(arr.__proto__.__proto__ === Object.prototype); // true
+```
+
+So: `arr → Array.prototype → Object.prototype → null`
+
+
+
+### 🔹 90. **What is prototypal inheritance?**
+
+Objects in JavaScript can **inherit properties and methods** from other objects via the prototype chain.
+
+🧠 **Example:**
+
+```js
+const animal = {
+  speak() {
+    return "I can speak";
+  }
+};
+
+const dog = Object.create(animal);
+dog.bark = () => "Woof";
+
+console.log(dog.speak()); // Inherited
+console.log(dog.bark());  // Own method
+```
+
+
+
+### 🔹 91. **Difference between `.call()`, `.apply()`, and `.bind()`**
+
+| Method    | Invokes immediately? | Pass args          | Binds `this` |
+| --------- | -------------------- | ------------------ | ------------ |
+| `call()`  | ✅ Yes                | As comma-separated | ✅ Yes        |
+| `apply()` | ✅ Yes                | As array           | ✅ Yes        |
+| `bind()`  | ❌ No (returns func)  | As comma-separated | ✅ Yes        |
+
+🧠 **Example:**
+
+```js
+function greet(greeting) {
+  return `${greeting}, ${this.name}`;
+}
+
+const user = { name: "Vikash" };
+
+console.log(greet.call(user, "Hello"));         // "Hello, Vikash"
+console.log(greet.apply(user, ["Hi"]));         // "Hi, Vikash"
+
+const greetUser = greet.bind(user);
+console.log(greetUser("Welcome"));              // "Welcome, Vikash"
+```
+
+
+
+### 🔹 92. **Difference between deep and shallow copy**
+
+| Copy Type    | What it copies               | Shared nested objects? |
+| ------------ | ---------------------------- | ---------------------- |
+| Shallow Copy | Top-level only               | ✅ Yes                  |
+| Deep Copy    | Entire structure recursively | ❌ No (fully cloned)    |
+
+🧠 **Example of Shallow Copy:**
+
+```js
+const original = { name: "Vikash", skills: ["JS", "React"] };
+const shallow = { ...original };
+
+shallow.skills.push("Node");
+console.log(original.skills); // Modified too ❗
+```
+
+🧠 **Example of Deep Copy:**
+
+```js
+const deep = JSON.parse(JSON.stringify(original));
+deep.skills.push("MongoDB");
+console.log(original.skills); // ✅ Unchanged
+```
+
+
+
+### 🔹 93. **How to clone an object?**
+
+✅ **Shallow Clone:**
+
+```js
+const clone1 = Object.assign({}, obj);
+const clone2 = { ...obj };
+```
+
+✅ **Deep Clone:**
+
+```js
+const deepClone = JSON.parse(JSON.stringify(obj)); // Simple but has limitations
+// Or use lodash:
+import _ from 'lodash';
+const deepClone = _.cloneDeep(obj);
+```
+
+
+
+### 🔹 94. **What is the `new` keyword?**
+
+Used to create **instances of objects** from constructor functions or classes.
+
+🧠 **Steps when `new` is used:**
+
+1. Creates a new empty object.
+2. Sets the `this` of the constructor to point to the new object.
+3. Inherits from the constructor's prototype.
+4. Returns the object.
+
+🧠 **Example:**
+
+```js
+function User(name) {
+  this.name = name;
+}
+const u = new User("Vikash");
+```
+
+
+
+### 🔹 95. **What are constructors?**
+
+**Constructor functions** are templates for creating objects.
+
+🧠 **Example:**
+
+```js
+function Car(make, model) {
+  this.make = make;
+  this.model = model;
+}
+
+const car1 = new Car("Toyota", "Camry");
+```
+
+🧠 Constructors + `new` = instance
+
+
+
+### 🔹 96. **What is object-oriented programming (OOP) in JavaScript?**
+
+OOP is a programming paradigm where you structure code around **objects** (data + methods).
+
+JavaScript supports OOP through:
+
+* Prototypes
+* Constructor functions
+* ES6 Classes
+
+🧠 **Pillars of OOP:**
+
+1. **Encapsulation** – data hiding via closures or private fields
+2. **Inheritance** – reuse via prototypes or `extends`
+3. **Polymorphism** – same method, different behaviors
+4. **Abstraction** – simplify interfaces
+
+
+### 🔹 97. **What are classes?**
+
+**ES6 classes** are syntactic sugar over prototypal inheritance.
+
+🧠 **Example:**
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    return `${this.name} makes a sound`;
+  }
+}
+
+const dog = new Animal("Dog");
+console.log(dog.speak());
+```
+
+
+
+### 🔹 98. **What are getters and setters?**
+
+They are **special methods** that define accessors for properties.
+
+🧠 **Example:**
+
+```js
+class Person {
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name() {
+    return this._name.toUpperCase();
+  }
+
+  set name(value) {
+    this._name = value.trim();
+  }
+}
+
+const p = new Person("vikash");
+console.log(p.name);      // VIKASH
+p.name = "  Kumar ";
+console.log(p.name);      // KUMAR
+```
+
+
+
+### 🔹 99. **What are static methods?**
+
+Static methods belong to the **class itself**, not instances.
+
+🧠 **Example:**
+
+```js
+class MathUtil {
+  static square(x) {
+    return x * x;
+  }
+}
+
+console.log(MathUtil.square(5));  // 25
+```
+
+You cannot call `MathUtil.square()` from an instance — only from the class.
+
+
