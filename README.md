@@ -2023,3 +2023,1200 @@ console.log(MathUtil.square(5));  // 25
 You cannot call `MathUtil.square()` from an instance — only from the class.
 
 
+
+# ✅ ES6+ Features
+
+
+
+### 🔹 100. **What’s new in ES6?**
+
+**ES6 (ECMAScript 2015)** introduced major syntax improvements and features:
+
+✅ Highlights:
+
+* `let`, `const`
+* Arrow functions
+* Template literals
+* Destructuring
+* Default parameters
+* Classes
+* Modules (`import`/`export`)
+* Promises
+* Symbols
+* Generators
+* `Map`, `Set`, `WeakMap`, `WeakSet`
+* Spread & Rest operators
+
+
+
+### 🔹 101. **What are arrow functions?**
+
+Arrow functions are a **shorter syntax** for writing functions and **do not have their own `this`**.
+
+🧠 **Syntax:**
+
+```js
+const add = (a, b) => a + b;
+```
+
+✅ Useful for:
+
+* One-liners
+* Callbacks
+* Preserving outer `this`
+
+🧠 **Example:**
+
+```js
+const user = {
+  name: "Vikash",
+  greet: function () {
+    setTimeout(() => {
+      console.log("Hi " + this.name); // 'this' is preserved
+    }, 1000);
+  }
+};
+user.greet();
+```
+
+
+
+### 🔹 102. **What are default parameters?**
+
+You can assign **default values to function parameters**.
+
+🧠 **Example:**
+
+```js
+function greet(name = "Guest") {
+  return `Hello, ${name}`;
+}
+
+console.log(greet());         // Hello, Guest
+console.log(greet("Vikash")); // Hello, Vikash
+```
+
+
+
+### 🔹 103. **What is destructuring?**
+
+Destructuring allows you to **extract values** from arrays or objects into variables.
+
+🧠 **Object Destructuring:**
+
+```js
+const user = { name: "Vikash", age: 25 };
+const { name, age } = user;
+```
+
+🧠 **Array Destructuring:**
+
+```js
+const [a, b] = [10, 20];  // a=10, b=20
+```
+
+
+### 🔹 104. **What is the spread operator (`...`)?**
+
+The **spread operator** is used to **expand** arrays or objects.
+
+🧠 **Example:**
+
+```js
+const arr = [1, 2, 3];
+const copy = [...arr];         // [1, 2, 3]
+
+const obj = { a: 1 };
+const newObj = { ...obj, b: 2 };  // {a: 1, b: 2}
+```
+
+
+### 🔹 105. **What is the rest parameter (`...`)?**
+
+The **rest operator** collects **all remaining elements** into an array.
+
+🧠 **Example:**
+
+```js
+function sum(...numbers) {
+  return numbers.reduce((acc, val) => acc + val, 0);
+}
+console.log(sum(1, 2, 3)); // 6
+```
+
+
+### 🔹 106. **What are template literals?**
+
+Template literals are **string literals** that allow:
+
+* Interpolation (`${}`)
+* Multiline strings
+
+🧠 **Syntax:**
+
+```js
+const name = "Vikash";
+const msg = `Hello, ${name}!
+Welcome to ES6.`;
+```
+
+
+
+### 🔹 107. **What are classes in JavaScript?**
+
+Introduced in ES6, classes are a **syntactical sugar** over prototype-based inheritance.
+
+🧠 **Example:**
+
+```js
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    return `Hi, I'm ${this.name}`;
+  }
+}
+```
+
+> Use `extends` and `super()` for inheritance.
+
+
+
+### 🔹 108. **What are modules?**
+
+JavaScript ES6 supports **modules** to break code into reusable pieces using `export` and `import`.
+
+🧠 **Syntax:**
+
+```js
+// math.js
+export function add(a, b) { return a + b; }
+
+// app.js
+import { add } from './math.js';
+console.log(add(2, 3)); // 5
+```
+
+
+
+### 🔹 109. **What are `let` and `const`?**
+
+| Keyword | Reassignment | Scope       | Hoisted | Temporal Dead Zone |
+| ------- | ------------ | ----------- | ------- | ------------------ |
+| `let`   | ✅ Yes        | Block Scope | ❌ No    | ✅ Yes              |
+| `const` | ❌ No         | Block Scope | ❌ No    | ✅ Yes              |
+
+```js
+let a = 10;
+const b = 20;
+```
+
+> `var` is function-scoped and hoisted. Prefer `let` and `const` in modern JS.
+
+
+
+### 🔹 110. **What are Promises?**
+
+A **Promise** is an object representing the **eventual completion (or failure)** of an asynchronous operation.
+
+🧠 **States:**
+
+* `pending`
+* `fulfilled`
+* `rejected`
+
+🧠 **Example:**
+
+```js
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Done!"), 1000);
+});
+
+promise.then(console.log).catch(console.error);
+```
+
+
+
+### 🔹 111. **What is Symbol?**
+
+A **Symbol** is a **unique, immutable primitive value** used as an object key.
+
+🧠 **Example:**
+
+```js
+const sym = Symbol("id");
+const obj = {
+  [sym]: 123
+};
+console.log(obj[sym]); // 123
+```
+
+> Symbols help avoid property name collisions.
+
+
+### 🔹 112. **What are generators?**
+
+A **generator function** can pause execution and resume later using `yield`.
+
+🧠 **Syntax:**
+
+```js
+function* count() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = count();
+console.log(gen.next()); // {value: 1, done: false}
+```
+
+Use Case: Custom iterators, async workflows, infinite sequences.
+
+
+
+### 🔹 113. **What is `Map` and `Set`?**
+
+#### ✅ Map:
+
+* Key-value pairs
+* Keys can be any type (including objects)
+
+```js
+const map = new Map();
+map.set("name", "Vikash");
+console.log(map.get("name")); // Vikash
+```
+
+#### ✅ Set:
+
+* Stores unique values
+
+```js
+const set = new Set([1, 2, 2, 3]);
+console.log(set); // Set(3) {1, 2, 3}
+```
+
+
+### 🔹 114. **What is `WeakMap` and `WeakSet`?**
+
+✅ They store **weak references** to objects, meaning they don’t prevent garbage collection.
+
+#### WeakMap:
+
+* Keys must be **objects**
+* Not iterable
+
+```js
+let obj = {};
+let wm = new WeakMap();
+wm.set(obj, "data");
+```
+
+#### WeakSet:
+
+* Values must be **objects**
+* Not iterable
+
+```js
+let ws = new WeakSet();
+ws.add({});
+```
+
+> ⚠️ Useful for **private data storage** in classes.
+
+
+
+## ✅ Memory & Performance
+
+
+
+### 🔹 115. **What causes memory leaks?**
+
+A **memory leak** occurs when memory is **no longer needed** but **not released**, causing the app to consume more memory over time.
+
+#### Common causes:
+
+1. **Global variables**
+
+   ```js
+   myVar = []; // no `let`, `const` – becomes global unintentionally
+   ```
+
+2. **Uncleared timers or intervals**
+
+   ```js
+   setInterval(() => {
+     console.log("Running...");
+   }, 1000); // Never cleared
+   ```
+
+3. **Event listeners not removed**
+
+   ```js
+   element.addEventListener('click', handler); // Not removed with removeEventListener
+   ```
+
+4. **Closures holding references**
+
+   ```js
+   function outer() {
+     let bigData = new Array(10000).fill("memory");
+     return function inner() {
+       console.log(bigData[0]);
+     };
+   }
+   ```
+
+5. **Detached DOM elements**
+
+   * When you remove a DOM element visually, but JavaScript still holds a reference to it.
+
+
+
+### 🔹 116. **How do you prevent memory leaks?**
+
+✅ Best practices:
+
+* Use `let`/`const` to avoid global vars.
+* Use `removeEventListener`.
+* Clear intervals and timeouts:
+
+  ```js
+  const id = setInterval(() => {}, 1000);
+  clearInterval(id);
+  ```
+* Nullify unused object references.
+* Use **weak collections** like `WeakMap`, `WeakSet` for temporary object storage.
+* Avoid excessive closure usage with large data.
+
+
+
+### 🔹 117. **What is garbage collection?**
+
+**Garbage Collection (GC)** is the process by which the JS engine **automatically frees up memory** used by unreferenced variables or objects.
+
+✅ JS uses **Mark-and-Sweep**:
+
+* It "marks" objects that are still reachable and **removes the rest** from memory.
+
+🧠 Example:
+
+```js
+let user = { name: "Vikash" };
+user = null; // The object becomes unreachable -> garbage collected
+```
+
+
+
+### 🔹 118. **How to optimize JavaScript performance?**
+
+✅ Performance optimization techniques:
+
+1. **Minimize DOM manipulation**
+
+   * Use DocumentFragment or batch updates.
+
+2. **Debounce & throttle expensive operations**
+
+   ```js
+   const debounce = (fn, delay) => {
+     let timeout;
+     return (...args) => {
+       clearTimeout(timeout);
+       timeout = setTimeout(() => fn(...args), delay);
+     };
+   };
+   ```
+
+3. **Use async/await instead of nested callbacks**
+
+4. **Avoid memory leaks**
+
+5. **Use web workers for heavy processing**
+
+6. **Lazy loading for resources**
+
+7. **Efficient data structures (Map, Set)**
+
+8. **Minimize reflows and repaints in the DOM**
+
+9. **Compress and bundle JS files**
+
+
+## ✅ Web APIs and Fetch
+
+
+
+### 🔹 119. **What is the Fetch API?**
+
+The **Fetch API** is a modern **promise-based** way to make HTTP requests in JavaScript.
+
+✅ Replaces `XMLHttpRequest`.
+
+
+
+### 🔹 120. **How does `fetch()` work?**
+
+`fetch(url, options)` returns a **Promise** that resolves to a **Response object**.
+
+🧠 Example:
+
+```js
+fetch('https://api.example.com/data')
+  .then(response => {
+    if (!response.ok) throw new Error('Error');
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
+```
+
+✅ Supports:
+
+* GET, POST, PUT, DELETE
+* Headers
+* Body (string, JSON, FormData)
+* CORS
+
+
+
+### 🔹 121. **Difference between Fetch and XMLHttpRequest**
+
+| Feature           | Fetch API           | XMLHttpRequest        |
+| ----------------- | ------------------- | --------------------- |
+| Modern            | ✅ Yes               | ❌ No                  |
+| Promise-based     | ✅ Yes               | ❌ No (uses callbacks) |
+| Chaining          | ✅ Elegant `.then()` | ❌ Complex logic       |
+| Streaming support | ✅ Yes               | ❌ No                  |
+| Simpler API       | ✅ Yes               | ❌ No                  |
+
+
+
+### 🔹 122. **What is CORS (Cross-Origin Resource Sharing)?**
+
+**CORS** is a security feature that restricts **cross-origin HTTP requests** unless the target server explicitly allows it.
+
+🧠 Browser blocks requests from `origin A` to `origin B` **unless B’s server** adds:
+
+```http
+Access-Control-Allow-Origin: https://originA.com
+```
+
+✅ Solved via:
+
+* Server-side headers
+* Proxy servers
+* CORS middleware in Node.js (e.g., `cors` package)
+
+
+
+### 🔹 123. **What is JSONP?**
+
+**JSONP (JSON with Padding)** is an old workaround for CORS using `<script>` tag.
+
+🧠 Example:
+
+```html
+<script src="https://example.com/api?callback=myFunction"></script>
+```
+
+```js
+function myFunction(data) {
+  console.log(data);
+}
+```
+
+⚠️ Security risk. Not used today. Use `CORS` or `proxy` instead.
+
+
+
+### 🔹 124. **How to parse JSON in JavaScript?**
+
+✅ Convert JSON string to JavaScript object:
+
+```js
+const jsonStr = '{"name":"Vikash"}';
+const obj = JSON.parse(jsonStr);
+```
+
+✅ Convert object to JSON string:
+
+```js
+const str = JSON.stringify({ name: "Vikash" });
+```
+
+
+
+### 🔹 125. **What are API calls?**
+
+**API calls** are requests made from client-side JS to a server to **fetch or send data**.
+
+🧠 Example (GET request):
+
+```js
+fetch("https://api.example.com/products")
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+🧠 Example (POST request):
+
+```js
+fetch("https://api.example.com/products", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name: "New Product" }),
+})
+.then(res => res.json())
+.then(data => console.log(data));
+```
+
+✅ APIs often return data in **JSON** format.
+
+
+
+
+## ✅ JavaScript Design Patterns
+
+
+
+### 🔹 126. **What is a Design Pattern?**
+
+A **design pattern** is a reusable, best-practice solution to a **common problem** in software design. These patterns are templates you can apply to write more **modular, scalable, and maintainable** code.
+
+🔧 Categories:
+
+* **Creational** – Object creation (e.g., Singleton, Factory)
+* **Structural** – Composition of classes/objects (e.g., Decorator, Adapter)
+* **Behavioral** – Communication between objects (e.g., Observer, Mediator)
+
+
+
+### 🔹 127. **What is the Module Pattern?**
+
+The **Module Pattern** allows you to **encapsulate logic** and expose only public methods/variables using **closures**.
+
+📦 Example:
+
+```js
+const CounterModule = (function () {
+  let count = 0; // private
+
+  function increment() {
+    count++;
+    console.log(count);
+  }
+
+  function reset() {
+    count = 0;
+  }
+
+  return {
+    increment,
+    reset
+  };
+})();
+
+CounterModule.increment(); // 1
+CounterModule.increment(); // 2
+CounterModule.reset();
+```
+
+✅ Use case: Code organization, encapsulation, reusable modules.
+
+
+
+### 🔹 128. **What is the Singleton Pattern?**
+
+The **Singleton Pattern** ensures a class has **only one instance** and provides a global point of access to it.
+
+👤 Example:
+
+```js
+const Singleton = (function () {
+  let instance;
+
+  function createInstance() {
+    return { name: "I am the only instance" };
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) instance = createInstance();
+      return instance;
+    }
+  };
+})();
+
+const a = Singleton.getInstance();
+const b = Singleton.getInstance();
+console.log(a === b); // true
+```
+
+✅ Use case: App settings, DB connections, logging services.
+
+
+### 🔹 129. **What is the Factory Pattern?**
+
+The **Factory Pattern** creates objects **without exposing the instantiation logic**.
+
+🏭 Example:
+
+```js
+function Car(type) {
+  if (type === "sedan") {
+    return { brand: "Toyota", seats: 5 };
+  } else if (type === "truck") {
+    return { brand: "Ford", seats: 2 };
+  }
+}
+
+const myCar = Car("sedan");
+console.log(myCar); // { brand: "Toyota", seats: 5 }
+```
+
+✅ Use case: When object creation is complex or dynamic.
+
+
+
+### 🔹 130. **What is the Observer Pattern?**
+
+The **Observer Pattern** is a pub-sub system where multiple observers **subscribe** to changes in an object and are **notified** when it changes.
+
+👁️ Example:
+
+```js
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(fn) {
+    this.observers.push(fn);
+  }
+
+  notify(data) {
+    this.observers.forEach(fn => fn(data));
+  }
+}
+
+const subject = new Subject();
+subject.subscribe((msg) => console.log(`Received: ${msg}`));
+subject.notify("Hello Observers!");
+```
+
+✅ Use case: Event systems, data-binding (React, Vue, Angular).
+
+
+
+### 🔹 131. **What is the Revealing Module Pattern?**
+
+The **Revealing Module Pattern** is a variation of the Module Pattern where all methods are defined privately and then **revealed via return**.
+
+🔍 Example:
+
+```js
+const Calculator = (function () {
+  let add = (a, b) => a + b;
+  let subtract = (a, b) => a - b;
+
+  return {
+    add,
+    subtract
+  };
+})();
+
+console.log(Calculator.add(5, 3)); // 8
+```
+
+✅ Benefit: Clear separation of public/private logic.
+
+
+
+## ✅ Testing in JavaScript
+
+
+
+### 🔹 132. **What is Unit Testing?**
+
+**Unit Testing** involves testing **individual units** (functions or components) in isolation to ensure they behave as expected.
+
+✅ Example:
+
+```js
+function add(a, b) {
+  return a + b;
+}
+
+// Test
+console.assert(add(2, 3) === 5, "add() should return 5");
+```
+
+
+
+### 🔹 133. **Popular JavaScript Testing Frameworks**
+
+🧪 Widely used frameworks:
+
+* **Jest** – Built by Facebook, great for React
+* **Mocha** – Flexible and widely adopted
+* **Chai** – Assertion library often used with Mocha
+* **Jasmine** – Older, BDD style
+* **Cypress** – For end-to-end testing
+* **Testing Library** – DOM testing with React, Vue, etc.
+
+
+### 🔹 134. **What is Jest?**
+
+[Jest](https://jestjs.io) is a **testing framework** for JavaScript with:
+
+* Zero config
+* Built-in assertions
+* Snapshot testing
+* Code coverage
+
+🧠 Example:
+
+```js
+// math.js
+export function add(a, b) {
+  return a + b;
+}
+
+// math.test.js
+import { add } from './math';
+
+test('adds two numbers', () => {
+  expect(add(2, 3)).toBe(5);
+});
+```
+
+Run using: `npx jest`
+
+
+
+### 🔹 135. **What is Mocha?**
+
+[Mocha](https://mochajs.org/) is a flexible test framework for Node and browser-based apps. It supports:
+
+* Asynchronous testing
+* BDD/TDD interfaces
+* Custom reporters
+
+🧠 Example:
+
+```js
+const assert = require('assert');
+
+describe('Math Tests', () => {
+  it('should return sum', () => {
+    assert.strictEqual(2 + 3, 5);
+  });
+});
+```
+
+Run using: `npx mocha`
+
+
+
+### 🔹 136. **How to write a test case in JavaScript?**
+
+✅ Generic format:
+
+```js
+describe('FunctionName', () => {
+  it('should return expected value', () => {
+    const result = myFunction(input);
+    expect(result).toBe(expected);
+  });
+});
+```
+
+✅ With Jest:
+
+```js
+function isEven(n) {
+  return n % 2 === 0;
+}
+
+test('isEven returns true for even numbers', () => {
+  expect(isEven(4)).toBe(true);
+});
+```
+
+✅ With Mocha + Chai:
+
+```js
+const chai = require('chai');
+const expect = chai.expect;
+
+describe('isEven', () => {
+  it('should return true for even numbers', () => {
+    expect(isEven(4)).to.be.true;
+  });
+});
+```
+
+
+## ✅ JavaScript and TypeScript
+
+### 137. **What is TypeScript?**
+
+**TypeScript** is a superset of JavaScript developed by Microsoft. It adds **static typing** to JavaScript.
+
+#### Example:
+
+```typescript
+// TypeScript
+let name: string = "Anti Killer";
+name = 123; // ❌ Error: Type 'number' is not assignable to type 'string'
+```
+
+* Compiles to plain JavaScript (`.ts` ➝ `.js`).
+* Helps in **large-scale application development**.
+* Detects errors at **compile time** rather than runtime.
+
+
+### 138. **What are the benefits of using TypeScript?**
+
+✅ **Benefits:**
+
+1. **Static Typing** – Helps catch type-related errors at compile time.
+2. **IDE Support** – Intelligent code completion, inline docs, and refactoring.
+3. **Better Code Maintenance** – Self-documented code with types.
+4. **Improved Collaboration** – Easier to understand APIs for large teams.
+5. **Early Bug Detection** – Errors are caught before runtime.
+6. **ES6+ Support** – Write modern JavaScript that compiles to ES5 for older browsers.
+
+
+
+### 139. **How is TypeScript different from JavaScript?**
+
+| Feature                | JavaScript             | TypeScript                            |
+| ---------------------- | ---------------------- | ------------------------------------- |
+| Typing                 | Dynamically typed      | Statically typed                      |
+| Compilation            | Interpreted at runtime | Compiled to JavaScript before running |
+| Error Checking         | Runtime                | Compile-time                          |
+| Support for Interfaces | ❌ No                   | ✅ Yes                                 |
+| Community/Adoption     | Widely adopted         | Rapidly growing                       |
+
+
+
+### 140. **What are interfaces in TypeScript?**
+
+Interfaces define the **structure of an object** — like a contract. They ensure consistency in objects used throughout the code.
+
+#### Example:
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+  greet(): void;
+}
+
+const user: Person = {
+  name: "Anti Killer",
+  age: 25,
+  greet() {
+    console.log(`Hello, ${this.name}`);
+  }
+};
+```
+
+
+### 141. **What are types and enums in TypeScript?**
+
+#### `type`:
+
+Used to define **custom types**.
+
+```typescript
+type UserID = string | number;
+
+let id: UserID;
+id = 123;  // ✅
+id = "abc"; // ✅
+```
+
+#### `enum`:
+
+Defines a set of **named constants**.
+
+```typescript
+enum Role {
+  ADMIN,
+  USER,
+  GUEST
+}
+
+let role: Role = Role.ADMIN;
+console.log(role); // 0
+```
+
+You can also assign custom values:
+
+```typescript
+enum Status {
+  SUCCESS = 200,
+  NOT_FOUND = 404
+}
+```
+
+
+
+## ✅ Common Interview Coding Challenges
+
+
+
+### 142. **Reverse a string**
+
+```js
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+console.log(reverseString("hello")); // "olleh"
+```
+
+
+
+### 143. **Check if a string is a palindrome**
+
+```js
+function isPalindrome(str) {
+  return str === str.split('').reverse().join('');
+}
+console.log(isPalindrome("madam")); // true
+```
+
+
+
+### 144. **Find the factorial of a number**
+
+```js
+function factorial(n) {
+  if (n === 0) return 1;
+  return n * factorial(n - 1);
+}
+console.log(factorial(5)); // 120
+```
+
+
+### 145. **FizzBuzz Problem**
+
+```js
+for (let i = 1; i <= 100; i++) {
+  let out = "";
+  if (i % 3 === 0) out += "Fizz";
+  if (i % 5 === 0) out += "Buzz";
+  console.log(out || i);
+}
+```
+
+
+
+### 146. **Find the largest/smallest number in an array**
+
+```js
+const arr = [5, 2, 9, 1];
+console.log(Math.max(...arr)); // 9
+console.log(Math.min(...arr)); // 1
+```
+
+
+
+### 147. **Remove duplicates from an array**
+
+```js
+const arr = [1, 2, 2, 3];
+const unique = [...new Set(arr)];
+console.log(unique); // [1, 2, 3]
+```
+
+
+### 148. **Flatten a nested array**
+
+```js
+function flatten(arr) {
+  return arr.flat(Infinity);
+}
+console.log(flatten([1, [2, [3, [4]]]])); // [1, 2, 3, 4]
+```
+
+
+
+### 149. **Implement a debounce function**
+
+```js
+function debounce(fn, delay) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+```
+
+**Use case:** Limit API call while typing in input field.
+
+
+
+### 150. **Implement a throttle function**
+
+```js
+function throttle(fn, delay) {
+  let lastCall = 0;
+  return function (...args) {
+    const now = new Date().getTime();
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      fn.apply(this, args);
+    }
+  };
+}
+```
+
+
+
+### 151. **Check if two arrays are equal**
+
+```js
+function arraysEqual(a, b) {
+  return a.length === b.length && a.every((val, i) => val === b[i]);
+}
+```
+
+
+
+### 152. **Find the missing number in a sequence**
+
+```js
+function findMissing(arr) {
+  let n = arr.length + 1;
+  let total = (n * (n + 1)) / 2;
+  let sum = arr.reduce((acc, curr) => acc + curr, 0);
+  return total - sum;
+}
+```
+
+
+
+### 153. **Check for anagram**
+
+```js
+function isAnagram(str1, str2) {
+  return str1.split('').sort().join('') === str2.split('').sort().join('');
+}
+```
+
+
+### 154. **Count the number of vowels in a string**
+
+```js
+function countVowels(str) {
+  return (str.match(/[aeiou]/gi) || []).length;
+}
+```
+
+
+### 155. **Implement bind/call/apply manually**
+
+```js
+Function.prototype.myCall = function (ctx, ...args) {
+  ctx.fn = this;
+  ctx.fn(...args);
+  delete ctx.fn;
+};
+```
+
+
+
+### 156. **Create a deep clone of an object**
+
+```js
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+```
+
+> 🔥 For more robust cloning (including functions and Dates), use `structuredClone(obj)` in modern browsers.
+
+
+### 157. **Find the longest word in a sentence**
+
+```js
+function longestWord(str) {
+  return str.split(' ').reduce((longest, curr) =>
+    curr.length > longest.length ? curr : longest, ""
+  );
+}
+```
+
+
+
+### 158. **Capitalize the first letter of each word**
+
+```js
+function capitalizeWords(str) {
+  return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+```
+
+
+
+### 159. **Implement a custom Promise**
+
+A simplified custom Promise constructor:
+
+```js
+class MyPromise {
+  constructor(executor) {
+    this.onResolve = null;
+    executor(this.resolve.bind(this));
+  }
+
+  resolve(value) {
+    if (this.onResolve) {
+      this.onResolve(value);
+    }
+  }
+
+  then(callback) {
+    this.onResolve = callback;
+  }
+}
+
+new MyPromise((res) => res("Resolved!")).then(console.log);
+```
+
+
+
+### 160. **Create a custom map or reduce**
+
+#### Custom `map`:
+
+```js
+Array.prototype.myMap = function (cb) {
+  let result = [];
+  for (let i = 0; i < this.length; i++) {
+    result.push(cb(this[i], i, this));
+  }
+  return result;
+};
+```
+
+#### Custom `reduce`:
+
+```js
+Array.prototype.myReduce = function (cb, initial) {
+  let acc = initial;
+  for (let i = 0; i < this.length; i++) {
+    acc = cb(acc, this[i], i, this);
+  }
+  return acc;
+};
+```
+
