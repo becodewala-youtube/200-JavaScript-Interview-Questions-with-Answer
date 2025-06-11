@@ -722,3 +722,280 @@ function attachEvent() {
 ```
 
 
+
+
+## ✅ **Objects and Arrays**
+
+
+### 🔹 **40. What is an object in JavaScript?**
+
+An **object** is a non-primitive data type that allows you to **store collections of key-value pairs**.
+
+* Keys (also called properties) are always strings (or symbols).
+* Values can be any type: string, number, array, object, function, etc.
+
+🧠 **Example:**
+
+```js
+const person = {
+  name: "Alice",
+  age: 25,
+  isStudent: false
+};
+```
+
+
+
+### 🔹 **41. How do you create an object?**
+
+✅ **Different ways:**
+
+```js
+// Object Literal
+const car = { brand: "Toyota", model: "Corolla" };
+
+// Using `new Object()`
+const user = new Object();
+user.name = "John";
+
+// Using a constructor function
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+const p1 = new Person("Bob", 30);
+
+// Using class (ES6)
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+const dog = new Animal("Buddy");
+```
+
+
+### 🔹 **42. What are object methods?**
+
+Object methods are **functions stored as properties** inside an object.
+
+🧠 **Example:**
+
+```js
+const person = {
+  name: "Alice",
+  greet: function() {
+    return `Hi, I'm ${this.name}`;
+  }
+};
+
+console.log(person.greet()); // Hi, I'm Alice
+```
+
+
+
+### 🔹 **43. What is `this` in JavaScript?**
+
+`this` refers to the **context** in which a function is executed.
+
+#### ✅ Depends on:
+
+* Whether it's in **global**, **object**, **class**, or **event handler** context.
+* Whether it's a **normal function** or **arrow function**.
+
+🧠 **Example:**
+
+```js
+const obj = {
+  name: "Bob",
+  sayName: function() {
+    console.log(this.name); // refers to obj
+  }
+};
+obj.sayName();
+```
+
+
+
+### 🔹 **44. How is `this` handled in arrow functions?**
+
+Arrow functions **do not have their own `this`**. They **inherit it from their lexical scope** (parent function or object).
+
+🧠 **Example:**
+
+```js
+const person = {
+  name: "Sam",
+  greet: () => {
+    console.log(this.name); // undefined (this is from global scope)
+  }
+};
+person.greet();
+```
+
+
+
+### 🔹 **45. What is object destructuring?**
+
+Destructuring is a **syntax to extract properties** from objects into variables.
+
+🧠 **Example:**
+
+```js
+const person = { name: "Alice", age: 25 };
+const { name, age } = person;
+console.log(name); // Alice
+```
+
+### 🔹 **46. What is array destructuring?**
+
+Similar to object destructuring but works on arrays by **position**.
+
+🧠 **Example:**
+
+```js
+const colors = ["red", "green", "blue"];
+const [first, second] = colors;
+console.log(first); // red
+```
+
+
+### 🔹 **47. How do you iterate over objects?**
+
+✅ Ways to iterate:
+
+```js
+const user = { name: "Tom", age: 30 };
+
+// Using for...in
+for (let key in user) {
+  console.log(key, user[key]);
+}
+
+// Using Object methods
+Object.keys(user).forEach(key => {
+  console.log(`${key}: ${user[key]}`);
+});
+
+Object.entries(user).forEach(([key, value]) => {
+  console.log(`${key} => ${value}`);
+});
+```
+
+
+
+### 🔹 **48. What are arrays in JavaScript?**
+
+Arrays are **ordered collections of values**, where each value has an index (starting from 0).
+
+```js
+const fruits = ["apple", "banana", "cherry"];
+```
+
+* Can hold **mixed data types**
+* Are zero-indexed
+
+
+
+### 🔹 **49. How to loop through an array?**
+
+✅ Methods to iterate:
+
+```js
+const numbers = [1, 2, 3];
+
+// for loop
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
+}
+
+// for...of
+for (let num of numbers) {
+  console.log(num);
+}
+
+// forEach
+numbers.forEach(n => console.log(n));
+```
+
+
+
+### 🔹 **50. What are common array methods?**
+
+| Method       | Description                          | Example                             |
+| ------------ | ------------------------------------ | ----------------------------------- |
+| `map()`      | Transforms each item                 | `[1, 2].map(x => x * 2)` → `[2, 4]` |
+| `filter()`   | Filters items based on condition     | `[1, 2, 3].filter(x => x > 1)`      |
+| `reduce()`   | Reduces array to a single value      | `[1,2,3].reduce((a,b)=>a+b)` → `6`  |
+| `forEach()`  | Executes a function for each element | `arr.forEach(x => console.log(x))`  |
+| `find()`     | Finds the first match                | `[4, 5, 6].find(x => x > 5)` → `6`  |
+| `includes()` | Checks if value exists               | `[1, 2].includes(2)` → `true`       |
+| `indexOf()`  | Gets the index of an element         | `['a','b'].indexOf('b')` → `1`      |
+| `sort()`     | Sorts array                          | `[3, 1, 2].sort()` → `[1,2,3]`      |
+| `concat()`   | Combines arrays                      | `[1].concat([2,3])` → `[1,2,3]`     |
+| `join()`     | Converts array to string             | `[1,2].join(',')` → `"1,2"`         |
+
+
+
+### 🔹 **51. Difference between `slice()` and `splice()`**
+
+| Feature    | `slice()`             | `splice()`                        |
+| ---------- | --------------------- | --------------------------------- |
+| Mutates?   | ❌ No                  | ✅ Yes                             |
+| Returns    | A shallow copy        | Deleted elements                  |
+| Parameters | `slice(start, end)`   | `splice(start, deleteCount, ...)` |
+| Use Case   | Extract part of array | Add/remove items in-place         |
+
+🧠 **Example:**
+
+```js
+const arr = [1, 2, 3, 4];
+arr.slice(1, 3); // [2, 3]
+arr.splice(1, 2); // [2, 3] and arr becomes [1, 4]
+```
+
+
+
+### 🔹 **52. What is the spread operator (`...`)**
+
+It allows **expansion** of arrays/objects.
+
+#### ✅ Uses:
+
+* Cloning
+* Combining
+* Passing array as arguments
+
+🧠 **Example:**
+
+```js
+const nums = [1, 2, 3];
+const copy = [...nums]; // [1, 2, 3]
+
+const obj = { a: 1, b: 2 };
+const newObj = { ...obj, c: 3 }; // { a:1, b:2, c:3 }
+```
+
+
+
+### 🔹 **53. What is the rest operator (`...`)**
+
+It allows **collecting** multiple elements into an array or object.
+
+🧠 **Example in function parameters:**
+
+```js
+function sum(...args) {
+  return args.reduce((acc, val) => acc + val, 0);
+}
+console.log(sum(1, 2, 3)); // 6
+```
+
+🧠 **Example in destructuring:**
+
+```js
+const [first, ...rest] = [10, 20, 30, 40];
+console.log(rest); // [20, 30, 40]
+```
+
+
