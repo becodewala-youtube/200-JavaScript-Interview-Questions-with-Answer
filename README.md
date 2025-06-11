@@ -347,3 +347,378 @@ console.log(message);
 ```
 
 
+
+## ✅ **Control Structures and Loops**
+
+
+
+### 🔹 **21. What are conditional statements in JavaScript?**
+
+Conditional statements **control the flow of code execution** based on conditions (true/false).
+
+#### ✅ Types:
+
+* `if`
+* `else if`
+* `else`
+* `switch`
+
+🧠 **Example:**
+
+```js
+let age = 20;
+
+if (age >= 18) {
+  console.log("You are an adult.");
+} else {
+  console.log("You are a minor.");
+}
+```
+
+
+
+### 🔹 **22. Difference between if, else if, and switch**
+
+| Feature     | `if` / `else if` / `else`                  | `switch`                       |
+| ----------- | ------------------------------------------ | ------------------------------ |
+| Conditions  | Works with any expression (range, boolean) | Works with fixed values only   |
+| Readability | Better for complex conditions              | Better for multiple values     |
+| Fallthrough | No fallthrough                             | Can fall through if no `break` |
+
+🧠 **Example:**
+
+```js
+let grade = "B";
+
+switch (grade) {
+  case "A": console.log("Excellent"); break;
+  case "B": console.log("Good"); break;
+  default: console.log("Try again");
+}
+```
+
+
+
+### 🔹 **23. What are loops in JavaScript?**
+
+Loops are used to **execute a block of code multiple times**, either a set number of times or while a condition is true.
+
+
+
+### 🔹 **24. Explain for, while, and do...while loops**
+
+#### ✅ `for` loop:
+
+Used when the **number of iterations is known**.
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+```
+
+#### ✅ `while` loop:
+
+Used when the **condition is checked before each iteration**.
+
+```js
+let i = 0;
+while (i < 5) {
+  console.log(i);
+  i++;
+}
+```
+
+#### ✅ `do...while` loop:
+
+Executes the code **at least once**, even if the condition is false.
+
+```js
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 5);
+```
+
+
+
+### 🔹 **25. What is the difference between for...in and for...of?**
+
+| Loop       | Iterates over           | Use Case              |
+| ---------- | ----------------------- | --------------------- |
+| `for...in` | Keys / Indexes          | Objects               |
+| `for...of` | Values (iterables only) | Arrays, strings, etc. |
+
+🧠 **Example:**
+
+```js
+let arr = ["a", "b", "c"];
+
+for (let index in arr) {
+  console.log(index); // 0, 1, 2
+}
+
+for (let value of arr) {
+  console.log(value); // "a", "b", "c"
+}
+```
+
+
+
+### 🔹 **26. How do break and continue work?**
+
+* **`break`**: Terminates the loop completely.
+* **`continue`**: Skips the current iteration and goes to the next.
+
+🧠 **Example:**
+
+```js
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue;
+  if (i === 4) break;
+  console.log(i); // 0, 1, 3
+}
+```
+
+
+
+### 🔹 **27. What is a label in JavaScript loops?**
+
+A **label** gives a name to a loop and allows `break` or `continue` to affect outer loops.
+
+🧠 **Example:**
+
+```js
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) break outer;
+    console.log(i, j);
+  }
+}
+```
+
+
+
+## ✅ **Functions and Closures**
+
+
+
+### 🔹 **28. What is a function in JavaScript?**
+
+A function is a **reusable block of code** that performs a task or returns a value.
+
+🧠 **Example:**
+
+```js
+function greet(name) {
+  return `Hello, ${name}`;
+}
+console.log(greet("Alice"));
+```
+
+ 
+
+### 🔹 **29. What are the types of functions in JavaScript?**
+
+* Function Declarations
+* Function Expressions
+* Arrow Functions
+* Anonymous Functions
+* Constructor Functions
+* IIFE (Immediately Invoked Function Expressions)
+
+ 
+
+### 🔹 **30. What is an IIFE?**
+
+**Immediately Invoked Function Expression** — runs immediately after it's defined.
+
+🧠 **Syntax:**
+
+```js
+(function() {
+  console.log("IIFE runs!");
+})();
+```
+
+Used for:
+
+* Creating a new scope
+* Avoiding global pollution
+
+
+### 🔹 **31. What is the difference between function declaration and expression?**
+
+| Type     | Function Declaration | Function Expression |
+| -------- | -------------------- | ------------------- |
+| Hoisted? | Yes                  | No                  |
+| Named?   | Required             | Optional            |
+
+🧠 **Example:**
+
+```js
+// Declaration
+function greet() {
+  return "Hello";
+}
+
+// Expression
+const greet = function() {
+  return "Hi";
+};
+```
+
+
+### 🔹 **32. What are arrow functions?**
+
+A **concise way** to write functions using the `=>` syntax.
+
+🧠 **Example:**
+
+```js
+const add = (a, b) => a + b;
+console.log(add(2, 3)); // 5
+```
+
+**Arrow functions do not have their own `this`** — they inherit from the parent scope.
+
+
+
+### 🔹 **33. What are first-class functions?**
+
+Functions in JavaScript are **first-class citizens**, meaning:
+
+* Can be **assigned to variables**
+* Passed as **arguments**
+* Returned from **other functions**
+
+🧠 **Example:**
+
+```js
+const sayHello = () => "Hello";
+const greet = (fn) => console.log(fn());
+greet(sayHello);
+```
+
+
+
+### 🔹 **34. What is a callback function?**
+
+A **function passed as an argument** to another function and called later.
+
+🧠 **Example:**
+
+```js
+function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data loaded");
+  }, 1000);
+}
+
+fetchData((data) => console.log(data));
+```
+
+
+
+### 🔹 **35. What is a higher-order function?**
+
+A function that **takes another function as an argument** or **returns another function**.
+
+🧠 **Example:**
+
+```js
+function multiplyBy(factor) {
+  return function (x) {
+    return x * factor;
+  };
+}
+
+const double = multiplyBy(2);
+console.log(double(5)); // 10
+```
+
+
+
+### 🔹 **36. What is recursion?**
+
+Recursion is a technique where a **function calls itself**.
+
+🧠 **Example:**
+
+```js
+function factorial(n) {
+  if (n === 0) return 1;
+  return n * factorial(n - 1);
+}
+console.log(factorial(5)); // 120
+```
+
+
+
+### 🔹 **37. What is a closure in JavaScript?**
+
+A **closure** is when a function **remembers its lexical scope**, even when executed outside its scope.
+
+🧠 **Example:**
+
+```js
+function outer() {
+  let count = 0;
+  return function inner() {
+    count++;
+    return count;
+  };
+}
+
+const counter = outer();
+console.log(counter()); // 1
+console.log(counter()); // 2
+```
+
+
+### 🔹 **38. Explain the use cases of closures**
+
+* **Data privacy / Encapsulation**
+* **Creating private variables**
+* **Partial application and currying**
+* **Memoization / Caching**
+
+🧠 **Use Case:**
+
+```js
+function createBankAccount(initialBalance) {
+  let balance = initialBalance;
+  return {
+    deposit: (amount) => balance += amount,
+    getBalance: () => balance
+  };
+}
+```
+
+
+
+### 🔹 **39. How to avoid memory leaks with closures?**
+
+Closures can **hold references** to outer variables — preventing garbage collection if not handled properly.
+
+✅ Best practices:
+
+* Don’t create unnecessary closures
+* Remove event listeners when no longer needed
+* Avoid large variables inside closures
+* Use tools like Chrome DevTools memory profiler
+
+🧠 **Example of leak:**
+
+```js
+function attachEvent() {
+  let largeData = new Array(100000).fill("leak");
+  document.getElementById("btn").addEventListener("click", () => {
+    console.log(largeData[0]);
+  });
+}
+// Solution: remove listener when not needed
+```
+
+
