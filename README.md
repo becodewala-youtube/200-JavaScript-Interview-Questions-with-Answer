@@ -999,3 +999,263 @@ console.log(rest); // [20, 30, 40]
 ```
 
 
+
+## ✅ Asynchronous JavaScript
+
+
+
+### 🔹 **54. What is synchronous vs asynchronous code?**
+
+| Synchronous              | Asynchronous                          |
+| ------------------------ | ------------------------------------- |
+| Executes line-by-line    | Can skip waiting tasks and move ahead |
+| Blocks further execution | Non-blocking; uses callbacks/promises |
+| Easier to read/debug     | More powerful for web tasks           |
+
+🧠 **Example (Synchronous):**
+
+```js
+console.log("Start");
+console.log("Middle");
+console.log("End");
+
+// Output:
+// Start
+// Middle
+// End
+```
+
+🧠 **Example (Asynchronous):**
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Inside setTimeout");
+}, 1000);
+
+console.log("End");
+
+// Output:
+// Start
+// End
+// Inside setTimeout
+```
+
+> 💡 Asynchronous code allows JavaScript to continue running without waiting for long-running operations like API calls, timers, etc.
+
+
+
+### 🔹 **55. What is the event loop?**
+
+The **event loop** is the mechanism that allows JavaScript to handle **asynchronous operations** by managing the **call stack** and **callback queue**.
+
+#### ✅ Flow:
+
+1. Executes code in the **call stack**.
+2. When an async operation (like `setTimeout`, `fetch`) is done, its callback goes to the **callback queue**.
+3. **Event loop** checks if the stack is empty and moves the callback into the stack.
+
+🧠 **Visual Diagram:**
+
+```
+[Call Stack]  <- main thread executes code
+[Web APIs]    <- handles setTimeout, fetch, etc.
+[Callback Queue] <- stores completed async tasks
+[Event Loop]  <- Moves tasks to Call Stack when it's free
+```
+
+
+
+### 🔹 **56. What is the call stack?**
+
+The **call stack** is a data structure that tracks function calls in JavaScript.
+
+```js
+function greet() {
+  console.log("Hello");
+}
+greet();
+```
+
+* `greet()` is pushed onto the stack.
+* After execution, it’s popped off the stack.
+
+> Stack = LIFO (Last In, First Out)
+
+
+
+### 🔹 **57. What is a callback?**
+
+A **callback** is a function passed as an argument to another function and called later.
+
+🧠 **Example:**
+
+```js
+function greet(name, callback) {
+  console.log("Hi " + name);
+  callback();
+}
+
+function sayBye() {
+  console.log("Bye!");
+}
+
+greet("Alice", sayBye);
+```
+
+
+
+### 🔹 **58. What is a promise?**
+
+A **Promise** is an object that represents the eventual result (or failure) of an **asynchronous operation**.
+
+🧠 **Syntax:**
+
+```js
+const promise = new Promise((resolve, reject) => {
+  // async task
+  const success = true;
+  if (success) {
+    resolve("Task done!");
+  } else {
+    reject("Error occurred");
+  }
+});
+
+promise
+  .then(result => console.log(result))
+  .catch(error => console.log(error));
+```
+
+
+
+### 🔹 **59. What are the states of a promise?**
+
+1. **Pending** – Initial state, not yet fulfilled or rejected.
+2. **Fulfilled** – Operation completed successfully (`resolve()`).
+3. **Rejected** – Operation failed (`reject()`).
+
+
+### 🔹 **60. What is async and await?**
+
+* `async` makes a function return a **Promise**.
+* `await` pauses execution until a promise is resolved.
+
+🧠 **Example:**
+
+```js
+async function fetchData() {
+  try {
+    let response = await fetch("https://api.example.com/data");
+    let data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+```
+
+
+
+### 🔹 **61. What is the difference between `setTimeout()` and `setInterval()`?**
+
+| `setTimeout()`            | `setInterval()`                     |
+| ------------------------- | ----------------------------------- |
+| Executes once after delay | Executes repeatedly after intervals |
+| Can simulate delay        | Can create periodic tasks           |
+
+🧠 **Example:**
+
+```js
+setTimeout(() => console.log("Runs once"), 2000);
+setInterval(() => console.log("Runs every 2 sec"), 2000);
+```
+
+
+
+### 🔹 **62. What is `clearTimeout()` and `clearInterval()`?**
+
+These are used to **cancel timers** set by `setTimeout()` or `setInterval()`.
+
+🧠 **Example:**
+
+```js
+const id = setTimeout(() => {
+  console.log("This will not run");
+}, 3000);
+
+clearTimeout(id); // cancels the timeout
+
+const intervalId = setInterval(() => console.log("Looping"), 1000);
+clearInterval(intervalId); // cancels the interval
+```
+
+
+
+### 🔹 **63. How to handle errors in promises?**
+
+✅ Use `.catch()` or `try...catch` with async/await.
+
+🧠 **Example with `.catch()`:**
+
+```js
+fetch("https://wrong-url.com")
+  .then(response => response.json())
+  .catch(error => console.error("Caught:", error));
+```
+
+🧠 **With async/await:**
+
+```js
+async function getData() {
+  try {
+    const res = await fetch("https://wrong-url.com");
+    const data = await res.json();
+  } catch (err) {
+    console.error("Error:", err);
+  }
+}
+```
+
+
+
+### 🔹 **64. What is a race condition?**
+
+A **race condition** occurs when multiple async operations run in parallel and the outcome depends on which completes first — often resulting in **unpredictable behavior**.
+
+🧠 **Example:**
+
+```js
+let data;
+fetch("api1.com").then(res => data = res);
+fetch("api2.com").then(res => data = res); // overwrites data
+```
+
+> ❗Use `Promise.race()` or design logic to handle priorities.
+
+
+
+### 🔹 **65. What is `Promise.all()` and `Promise.race()`?**
+
+| Feature       | `Promise.all()`          | `Promise.race()`                              |
+| ------------- | ------------------------ | --------------------------------------------- |
+| Resolves when | **All promises resolve** | **First promise (resolve or reject)** settles |
+| Rejects if    | **Any one rejects**      | First one to settle decides the result        |
+
+🧠 **Example:**
+
+```js
+const p1 = Promise.resolve("A");
+const p2 = Promise.resolve("B");
+
+// Promise.all
+Promise.all([p1, p2])
+  .then(values => console.log(values)); // ['A', 'B']
+
+// Promise.race
+Promise.race([p1, p2])
+  .then(value => console.log(value)); // 'A' or 'B', whichever is faster
+```
+
+
