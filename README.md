@@ -3220,3 +3220,770 @@ Array.prototype.myReduce = function (cb, initial) {
 };
 ```
 
+
+✅ **Miscellaneous JavaScript Questions**
+
+
+### ✅ 161. **What is JSON?**
+
+**JSON (JavaScript Object Notation)** is a lightweight **data-interchange format**, easy for humans to read and write, and easy for machines to parse and generate.
+
+* Used for transmitting data between a server and web application.
+
+#### Example:
+
+```json
+{
+  "name": "Anti Killer",
+  "age": 25,
+  "isDeveloper": true
+}
+```
+
+* JSON supports: strings, numbers, objects, arrays, booleans, and `null`.
+
+
+
+### ✅ 162. **Difference between JSON and JavaScript object**
+
+| Feature           | JSON                                  | JavaScript Object                       |
+| ----------------- | ------------------------------------- | --------------------------------------- |
+| Format            | String format                         | Native object                           |
+| Quotes            | Keys & strings must use double quotes | Can use unquoted keys and single quotes |
+| Data Type Support | Limited (no functions, `undefined`)   | Full JS support (functions, symbols)    |
+| Usage             | Data transfer                         | Program logic                           |
+
+#### Example:
+
+```json
+// JSON (used in APIs)
+{ "name": "Anti" }
+
+// JavaScript Object
+{ name: "Anti" }
+```
+
+
+
+### ✅ 163. **What is `eval()`?**
+
+`eval()` is a function that **executes a string of JavaScript code**.
+
+#### Example:
+
+```js
+eval("console.log('Hello from eval')"); // Logs: Hello from eval
+```
+
+
+
+### ✅ 164. **Why is `eval()` considered dangerous?**
+
+❌ **Security Risk**:
+
+* Can execute **malicious code**.
+* Allows **code injection attacks** (XSS).
+
+❌ **Performance Hit**:
+
+* Prevents JavaScript engine optimizations.
+
+❌ **Hard to Debug**:
+
+* Errors inside `eval()` are harder to track.
+
+> 🔥 Avoid using `eval()` unless absolutely necessary. Use `JSON.parse()` or safer alternatives.
+
+
+
+### ✅ 165. **What is a polyfill?**
+
+A **polyfill** is a piece of JavaScript code used to provide modern functionality in **older browsers** that do not natively support it.
+
+#### Example: `Array.prototype.includes()`
+
+```js
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function (searchElement) {
+    return this.indexOf(searchElement) !== -1;
+  };
+}
+```
+
+
+
+### ✅ 166. **What is transpilation?**
+
+**Transpilation** is the process of converting source code from one language to another **at the same level of abstraction**.
+
+🔄 Example: TypeScript ➝ JavaScript or ES6 ➝ ES5
+
+Used to:
+
+* Ensure compatibility with older environments
+* Use modern language features
+
+
+
+### ✅ 167. **What is Babel?**
+
+[Babel](https://babeljs.io) is a **JavaScript compiler** used to transpile **modern JS (ES6+) to older versions (ES5)** for browser compatibility.
+
+🛠 Features:
+
+* Converts arrow functions, classes, async/await
+* Works with React JSX
+* Has a plugin system
+
+#### Example:
+
+```js
+// ES6 input
+const greet = () => console.log("Hi");
+
+// Babel output (ES5)
+var greet = function () {
+  console.log("Hi");
+};
+```
+
+
+
+### ✅ 168. **Difference between compilation and interpretation**
+
+| Feature | Compilation            | Interpretation                     |
+| ------- | ---------------------- | ---------------------------------- |
+| Timing  | Before execution       | During execution                   |
+| Output  | Machine code           | Executes line-by-line              |
+| Speed   | Faster (once compiled) | Slower                             |
+| Example | C, Java                | Python, JavaScript (traditionally) |
+
+🔁 **JavaScript is both interpreted and compiled** — via Just-In-Time (JIT) compilation.
+
+
+### ✅ 169. **What are JavaScript engines?**
+
+A **JavaScript engine** is a program that interprets and executes JavaScript code.
+
+| Engine Name    | Browser         |
+| -------------- | --------------- |
+| V8             | Chrome, Node.js |
+| SpiderMonkey   | Firefox         |
+| JavaScriptCore | Safari          |
+| Chakra         | Edge (old)      |
+
+📌 Most engines use **JIT compilation** for better performance.
+
+
+
+### ✅ 170. **Stack vs Heap Memory**
+
+| Feature      | Stack                         | Heap                           |
+| ------------ | ----------------------------- | ------------------------------ |
+| Usage        | Primitive values (fixed size) | Objects, arrays (dynamic size) |
+| Memory Size  | Small                         | Large                          |
+| Access Speed | Fast                          | Slower                         |
+| Lifecycle    | Auto-managed (LIFO)           | Manual/GC-managed              |
+
+#### Example:
+
+```js
+let x = 10;            // Stored in stack
+let obj = { name: "A" }; // Stored in heap
+```
+
+
+
+### ✅ 171. **How does JavaScript handle concurrency?**
+
+JS is **single-threaded**, but handles concurrency via the **event loop** using:
+
+* **Call Stack**
+* **Web APIs (Browser)**: `setTimeout`, `fetch`, DOM
+* **Callback Queue (Macrotasks)**
+* **Microtask Queue**: `Promise.then()`
+
+🌀 Event Loop coordinates all tasks and ensures non-blocking behavior.
+
+
+
+### ✅ 172. **What is debouncing and throttling?**
+
+| Technique | Use Case             | Behavior                                     |
+| --------- | -------------------- | -------------------------------------------- |
+| Debounce  | Input fields, search | Runs **after a delay** since the last call   |
+| Throttle  | Scroll/Resize events | Runs **at intervals**, ignoring excess calls |
+
+#### Debounce Example:
+
+```js
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+```
+
+
+
+### ✅ 173. **Microtask vs Macrotask Queue**
+
+| Queue          | Examples                                    | Priority |
+| -------------- | ------------------------------------------- | -------- |
+| **Microtasks** | `Promise.then`, `MutationObserver`          | High     |
+| **Macrotasks** | `setTimeout`, `setInterval`, `setImmediate` | Low      |
+
+✅ **Microtasks are executed before any macrotasks**, after the current stack is cleared.
+
+#### Example:
+
+```js
+console.log("Start");
+
+setTimeout(() => console.log("Macrotask"), 0);
+
+Promise.resolve().then(() => console.log("Microtask"));
+
+console.log("End");
+
+// Output:
+// Start
+// End
+// Microtask
+// Macrotask
+```
+
+
+
+### ✅ 174. **What is reflow and repaint in the browser?**
+
+* **Reflow**: When the browser recalculates **layout and geometry** (e.g., DOM changes).
+* **Repaint**: When the browser updates **pixels** (e.g., color, visibility).
+
+#### Cost:
+
+* Reflows are **expensive**. Try to **batch DOM changes**.
+* Avoid triggering layout thrashing (`offsetHeight`, `getBoundingClientRect`).
+
+ 
+
+### ✅ 175. **What are Web Workers?**
+
+**Web Workers** run **JavaScript code in background threads**, separate from the main thread.
+
+📌 Useful for:
+
+* Long computations
+* Keeping UI responsive
+
+#### Example:
+
+```js
+const worker = new Worker('worker.js');
+worker.postMessage("Hello");
+
+worker.onmessage = function (e) {
+  console.log("Message from worker: " + e.data);
+};
+```
+
+> Inside `worker.js`:
+
+```js
+onmessage = function (e) {
+  postMessage("Received: " + e.data);
+};
+```
+
+
+## ✅ Latest ES Features (ES7 to ES13)
+
+
+### 176. **What is `Array.prototype.includes()`?** (ES7 - ES2016)
+
+Checks if an array **includes a specific element**. Returns `true` or `false`.
+
+```js
+const fruits = ['apple', 'banana', 'mango'];
+console.log(fruits.includes('banana')); // true
+console.log(fruits.includes('grape'));  // false
+```
+
+✔ More readable alternative to `indexOf()`.
+
+
+### 177. **What is the Exponentiation Operator `**`?** (ES7 - ES2016)
+
+Used to raise a number to a power.
+
+```js
+console.log(2 ** 3); // 8
+// Equivalent to Math.pow(2, 3)
+```
+
+
+
+### 178. **What is `async/await`?** (ES8 - ES2017)
+
+A **syntax sugar** over Promises for handling asynchronous operations in a cleaner way.
+
+```js
+async function fetchData() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+  console.log(data);
+}
+```
+
+✔ Makes async code look synchronous.
+
+
+
+### 179. **What is `Object.entries()` and `Object.values()`?** (ES8 - ES2017)
+
+* `Object.entries()` → Returns array of key-value pairs.
+* `Object.values()` → Returns array of values.
+
+```js
+const obj = { a: 1, b: 2 };
+
+console.log(Object.entries(obj)); // [['a', 1], ['b', 2]]
+console.log(Object.values(obj));  // [1, 2]
+```
+
+
+
+### 180. **What is Optional Chaining (`?.`)?** (ES11 - ES2020)
+
+Safely access nested properties without throwing an error if a part is `undefined` or `null`.
+
+```js
+const user = { profile: { name: "Anti" } };
+
+console.log(user.profile?.name);     // "Anti"
+console.log(user.contact?.email);    // undefined (no error)
+```
+
+
+
+### 181. **What is Nullish Coalescing (`??`)?** (ES11 - ES2020)
+
+Returns the **right-hand value only if the left-hand is `null` or `undefined`**.
+
+```js
+const val = null ?? "default";
+console.log(val); // "default"
+
+0 ?? 5           // returns 0 (because 0 is not null/undefined)
+```
+
+✔ Avoids unintended fallback for falsy values like 0, false.
+
+
+
+### 182. **What are Private Class Fields?** (ES12 - ES2021)
+
+Use `#` prefix to declare private variables inside classes.
+
+```js
+class Counter {
+  #count = 0;
+
+  increment() {
+    this.#count++;
+    console.log(this.#count);
+  }
+}
+
+const c = new Counter();
+c.increment(); // 1
+// c.#count; ❌ SyntaxError: Private field '#count' must be declared
+```
+
+
+
+### 183. **What is Dynamic Import?** (ES11 - ES2020)
+
+Loads a module **only when needed**, useful for **code splitting** and performance.
+
+```js
+button.addEventListener("click", async () => {
+  const { showAlert } = await import("./utils.js");
+  showAlert("Dynamic import loaded!");
+});
+```
+
+✔ Reduces initial load time in web apps.
+
+ 
+
+### 184. **What is the BigInt type?** (ES11 - ES2020)
+
+`BigInt` allows working with integers **beyond 2<sup>53</sup> - 1**, which is the limit for regular numbers in JavaScript.
+
+```js
+const big = 1234567890123456789012345678901234567890n;
+console.log(typeof big); // "bigint"
+```
+
+ 
+
+###  185. **What is `Promise.allSettled()`?** (ES11 - ES2020)
+
+Waits for **all promises to settle** (either fulfilled or rejected), and returns their results.
+
+```js
+const promises = [
+  Promise.resolve(1),
+  Promise.reject("error"),
+  Promise.resolve(3)
+];
+
+Promise.allSettled(promises).then(results => console.log(results));
+```
+
+✔ Useful when you want to process all results, even if some fail.
+
+ 
+
+## ✅ Front-End Framework Integration
+
+ 
+
+### 186. **How does JavaScript integrate with HTML/CSS?**
+
+* JavaScript **manipulates HTML (DOM)** and CSS (styles) dynamically.
+* Integrates via:
+
+  * Inline: `<script>alert("Hi")</script>`
+  * External: `<script src="app.js"></script>`
+* Used to:
+
+  * Handle events (click, input)
+  * Update styles
+  * Create elements dynamically
+
+```html
+<button onclick="changeColor()">Click</button>
+<script>
+  function changeColor() {
+    document.body.style.background = "skyblue";
+  }
+</script>
+```
+
+ 
+
+### 187. **What is the role of JavaScript in SPAs (Single Page Applications)?**
+
+SPA = Web app that **loads a single HTML page** and dynamically updates it using JS (usually via frameworks like React, Vue, Angular).
+
+🔧 JavaScript handles:
+
+* **Routing** (via libraries like React Router)
+* **Dynamic content rendering**
+* **State management**
+* **API communication (AJAX/fetch)**
+
+✔ Faster UX, no full-page reloads.
+
+
+
+### 188. **What is Virtual DOM?**
+
+A **lightweight copy of the real DOM** used by libraries like React to optimize updates.
+
+🔁 When state changes:
+
+* React updates the Virtual DOM
+* Compares with previous version (diffing)
+* Applies **minimum real DOM changes** (reconciliation)
+
+✔ Improves performance and efficiency.
+
+
+
+### 189. **Difference between Vanilla JS and React**
+
+| Feature          | Vanilla JS                 | React (Library)          |
+| ---------------- | -------------------------- | ------------------------ |
+| DOM Handling     | Manual                     | Declarative Virtual DOM  |
+| Code Structure   | Imperative                 | Component-based          |
+| Reusability      | Low                        | High (components)        |
+| State Management | Custom code or global vars | useState, Redux, Context |
+| Learning Curve   | Low                        | Medium                   |
+
+
+### 190. **How is State Managed in JavaScript Apps?**
+
+#### In Vanilla JS:
+
+```js
+let state = { count: 0 };
+
+function increment() {
+  state.count++;
+  document.getElementById("count").innerText = state.count;
+}
+```
+
+#### In React:
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+```
+
+#### Advanced State Management:
+
+* **Redux**: Centralized global state (flux pattern)
+* **Context API**: Lightweight built-in global state
+* **Zustand / Recoil**: Lightweight alternatives
+
+✔ State management is key to UI updates and reactivity in modern JS apps.
+
+
+
+## ✅ Security & Best Practices
+
+
+
+### 191. **What is XSS and how to prevent it?**
+
+**XSS (Cross-Site Scripting)** is a type of security vulnerability where an attacker injects malicious scripts into webpages viewed by others.
+
+#### ❌ Example (vulnerable):
+
+```html
+<div id="user"></div>
+<script>
+  const username = location.search.slice(1); // e.g., ?<script>alert(1)</script>
+  document.getElementById('user').innerHTML = username;
+</script>
+```
+
+#### ✅ Prevention:
+
+* Use `textContent` instead of `innerHTML`.
+* Sanitize user input.
+* Use CSP (Content Security Policy).
+* Escape dynamic values.
+
+```js
+document.getElementById('user').textContent = username;
+```
+
+
+
+### 192. **What is CSRF?**
+
+**CSRF (Cross-Site Request Forgery)** forces a logged-in user to perform unwanted actions on a web application they are authenticated in.
+
+#### Example:
+
+* User logged into `bank.com`.
+* Visits `evil.com` which sends a hidden request to `bank.com/transfer`.
+
+#### ✅ Prevention:
+
+* Use **CSRF tokens**.
+* Use **SameSite cookies**.
+* Validate **HTTP referers/origin headers**.
+
+
+
+### 193. **How to write secure JavaScript code?**
+
+✅ Tips:
+
+* **Validate & sanitize inputs**.
+* Never use `eval()`.
+* Use `HTTPS`.
+* Avoid exposing sensitive data in frontend.
+* Use proper **authentication** (tokens, JWT, etc.).
+* Use **CSP headers** and **security linters**.
+
+
+
+### 194. **What are best practices for writing JavaScript?**
+
+✅ Best Practices:
+
+* Use `const` and `let` (not `var`).
+* Keep functions small and reusable.
+* Use strict mode: `"use strict";`.
+* Prefer `===` over `==`.
+* Avoid deep nesting; use early returns.
+* Use meaningful names (`getUserData`, not `getData`).
+* Comment where necessary (but avoid over-commenting).
+* Follow consistent code style (Prettier, ESLint).
+
+
+
+### 195. **Why should you avoid global variables?**
+
+❌ Global variables:
+
+* Cause **naming conflicts**.
+* Make code **hard to maintain**.
+* Leak across modules unintentionally.
+* Are hard to debug.
+
+✅ Use block scope (`let`, `const`) and modules (`import/export`) to contain variables.
+
+
+
+### 196. **How to handle asynchronous errors?**
+
+#### With Promises:
+
+```js
+fetch('/data.json')
+  .then(res => res.json())
+  .catch(err => console.error("Failed:", err));
+```
+
+#### With async/await:
+
+```js
+async function getData() {
+  try {
+    const res = await fetch('/data.json');
+    const data = await res.json();
+  } catch (error) {
+    console.error("Error fetching data", error);
+  }
+}
+```
+
+✅ Always wrap async code in `try...catch`.
+
+
+
+### 197. **What is input sanitization?**
+
+Input sanitization means **cleaning and validating** user-provided input to ensure:
+
+* No malicious characters/scripts are injected.
+* Data is of expected format/type.
+
+#### Example:
+
+```js
+function sanitize(input) {
+  return input.replace(/[<>&"'\/]/g, "");
+}
+
+sanitize("<script>"); // ""
+```
+
+✅ Use libraries like **DOMPurify** for HTML sanitization.
+
+
+
+### 198. **What are some anti-patterns in JavaScript?**
+
+Anti-patterns = common but **bad programming practices**.
+
+#### Examples:
+
+* Using `var` instead of `let/const`.
+* Modifying built-in objects like `Array.prototype`.
+* Using global variables excessively.
+* Deep nesting of conditionals.
+* Callback hell:
+
+  ```js
+  doA(() => {
+    doB(() => {
+      doC(() => { /* ... */ });
+    });
+  });
+  ```
+
+✅ Prefer Promises/async functions to avoid callback hell.
+
+
+
+## ✅ JavaScript in Interviews
+
+
+
+### 199. **What are some tricky JS questions asked in interviews?**
+
+✅ Examples:
+
+* What is the output of:
+
+  ```js
+  console.log([] + []); // ""
+  console.log([] + {}); // "[object Object]"
+  ```
+
+* Explain closure with example.
+
+* Difference between `==` and `===`.
+
+* Explain event loop, microtasks, macrotasks.
+
+* What are `call`, `apply`, and `bind`?
+
+
+### 200. **Difference between `Object.freeze()` and `Object.seal()`**
+
+| Feature                        | `Object.freeze()` | `Object.seal()`                |
+| ------------------------------ | ----------------- | ------------------------------ |
+| Add properties                 | ❌ Not allowed     | ❌ Not allowed                  |
+| Remove properties              | ❌ Not allowed     | ❌ Not allowed                  |
+| Modify properties              | ❌ Not allowed     | ✅ Allowed (existing ones only) |
+| Make property non-configurable | ✅                 | ✅                              |
+
+```js
+const obj = { name: "Anti" };
+
+Object.freeze(obj);
+obj.name = "New"; // ❌ No change
+
+Object.seal(obj);
+obj.name = "Updated"; // ✅ Works
+```
+
+
+
+### 201. **How would you optimize a web page using JavaScript?**
+
+✅ Techniques:
+
+* Lazy load images (`<img loading="lazy">`)
+* Code splitting (dynamic import)
+* Minify JavaScript (Terser, UglifyJS)
+* Avoid memory leaks (detach listeners)
+* Use throttling/debouncing
+* Reduce DOM access
+* Cache DOM queries
+* Use Service Workers for caching
+* Defer or async non-critical scripts
+
+
+### 202. **What are some common JavaScript pitfalls?**
+
+❌ Pitfalls and gotchas:
+
+* **Falsy traps**: `0`, `""`, `null`, `undefined`, `NaN`, `false`
+* Using `==` instead of `===`
+* Forgetting `break` in `switch`
+* Accidentally declaring globals:
+
+  ```js
+  function foo() {
+    bar = 10; // global leak if `var/let/const` is missing
+  }
+  ```
+* Mutating objects unintentionally (pass by reference)
+* Incorrect `this` context
+* Mixing async and sync code
+
